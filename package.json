@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start:headed": "cross-env HEADLESS=false ts-node src/server.ts",
+    "start:headless": "cross-env HEADLESS=true ts-node src/server.ts",
     "build": "tsc",
     "playwright:install": "playwright install"
   },
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@types/csv-parse": "^1.1.12",
-    "@types/express": "^5.0.6"
+    "@types/express": "^5.0.6",
+    "cross-env": "^10.1.0"
   }
 }

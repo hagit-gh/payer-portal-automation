@@ -83,15 +83,10 @@ npx playwright install
 Start the API server with:
 
 ```
-npm start
-```
-
-If the `start` script is not defined, you can run the server directly:
+npm run start:headed for headed mode (usually for debugging)
+npm run start:headless for headless mode (usually for production)
 
 ```
-npx ts-node src/server.ts
-```
-
 The server will start locally at:
 
 ```
@@ -143,7 +138,9 @@ data/
 Start server
 
 ```
-npm start
+npm run start:headless
+npm run start:headed
+
 ```
 
 Compile TypeScript
