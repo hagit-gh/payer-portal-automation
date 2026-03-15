@@ -1,0 +1,5 @@
+payerId,taxId,portalUrl,username,password,defaultMinDelayMs,defaultMaxConcurrency
+PAYER_001,12-3456789,https://gateway.agreeablegrass-c40c311b.eastus.azurecontainerapps.io/eobs,provider_a,pass_a,800,1
+PAYER_001,98-7654321,https://gateway.agreeablegrass-c40c311b.eastus.azurecontainerapps.io/eobs,provider_b,pass_b,800,1
+PAYER_002,12-3456789,https://gateway.agreeablegrass-c40c311b.eastus.azurecontainerapps.io/eobs,provider_a_p2,pass_a_p2,1200,1
+PAYER_003,55-5555555,https://gateway.agreeablegrass-c40c311b.eastus.azurecontainerapps.io/eobs,provider_c,pass_c,1500,1
