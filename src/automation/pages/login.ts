@@ -18,7 +18,8 @@ export class LoginPageObject{
     }
 
     async getLoginButton(){
-        return await findElementByTypeAndAttributes(this.page, "//button", "submit")
+        const elements =  await findElementByTypeAndAttributes(this.page, "//button", "submit")
+        return elements[0]
     }
 
 }
