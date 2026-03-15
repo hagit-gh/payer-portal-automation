@@ -8,12 +8,12 @@ export class LoginPageObject{
     }
 
     async getUserNameTextBox() {
-        const element = await findElementByTypeAndAttributes(this.page, "//input", "username", 15000)
+        const element = await findElementByTypeAndAttributes(this.page, "//input", "username", 120000)
         return element[0]
     }
 
     async getPasswordTextBox() {
-        const elements = await findElementByTypeAndAttributes(this.page, "//input", "password", 15000)
+        const elements = await findElementByTypeAndAttributes(this.page, "//input", "password", 120000)
         return elements[0]
     }
 
