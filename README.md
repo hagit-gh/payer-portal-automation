@@ -1,6 +1,9 @@
 # Payer Portal Automation
 
-Automation service that logs into payer portals and downloads EOB (Explanation of Benefits) documents using browser automation.
+Automation service that logs into payer portals.
+Two flows are realized:
+1. Downloads EOB (Explanation of Benefits) documents and get EBO's data.
+2. Submit some appeal request
 
 The service exposes an HTTP API that triggers an automation flow for a specific payer and returns the results of the run.
 
@@ -97,7 +100,7 @@ http://localhost:3000
 
 # Example API Request
 
-Example request to trigger an automation run:
+Example request to trigger an automation run for download EBO's:
 
 ```
 curl -X POST http://localhost:3000/run \
@@ -117,6 +120,26 @@ curl -X POST http://localhost:3000/run \
 }'
 ```
 
+Example request to trigger an automation run for submit appeal:
+
+```
+curl -X POST http://localhost:3000/run \
+-H "Content-Type: application/json" \
+-d '{
+  "payerId": "PAYER_001",
+  "taxId": "12-3456789",
+  "claimId": "CLM-998877",
+  "appealType": "reconsideration",
+  "reason": "Medical necessity documentation attached",
+  "attachments": [
+    {
+      "fileName": "records.pdf",
+      "contentBase64": "<base64>"
+    }
+  ],
+  "submit": true
+}'
+```
 ---
 
 # Project Structure
