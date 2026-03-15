@@ -84,6 +84,7 @@ npx playwright install
 # Running the Server
 
 Start the API server with:
+
 For headed mode (usually for debugging)
 ```
 npm run start:headed
