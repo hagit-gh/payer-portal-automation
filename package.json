@@ -2,6 +2,11 @@
   "name": "payer-automation",
   "version": "1.0.0",
   "type": "commonjs",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "build": "tsc",
+    "playwright:install": "playwright install"
+  },
   "dependencies": {
     "csv-parse": "^6.1.0",
     "csv-stringify": "^6.6.0",
