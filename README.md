@@ -138,31 +138,12 @@ data/
 
 ---
 
-# Adding Useful Scripts
-
-You can add shortcuts inside **package.json**:
-
-```
-"scripts": {
-  "start": "ts-node src/server.ts",
-  "dev": "nodemon src/server.ts",
-  "build": "tsc",
-  "playwright:install": "playwright install"
-}
-```
-
-Then you can run:
+# Useful Scripts
 
 Start server
 
 ```
 npm start
-```
-
-Development mode (auto restart)
-
-```
-npm run dev
 ```
 
 Compile TypeScript
