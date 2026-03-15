@@ -9,7 +9,7 @@ export const requestContext = new AsyncLocalStorage<Map<string, any>>();
 export const ROOT_DIR = process.cwd();
 
 const PORT = 3000;
-const CSV_FILE = `${ROOT_DIR}\\payer_targets.csv`
+const CSV_PAYERS_DATA_PATH = `${ROOT_DIR}\\data\\payer_targets.csv`
 
 const app = express();
 app.use(express.json()); 
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 app.post("/api/payer/eobs", async (req: Request, res: Response) => {
     try {
         const data = req.body;
-        let results = await runGetEobData(CSV_FILE, data);
+        let results = await runGetEobData(CSV_PAYERS_DATA_PATH, data);
         res.setHeader("Content-Type", "application/json");
         res.json(generateEOBResponse(results, data));
     } catch (err: any) {
@@ -41,7 +41,7 @@ app.post("/api/payer/eobs", async (req: Request, res: Response) => {
 app.post("/api/payer/submit-appeal", async (req: Request, res: Response) => {
     try {
         const data = req.body; // { payerId, taxId, claimId, appealType, attachments, submit, ... }
-        const result = await runSendAppealFlow(CSV_FILE, data);
+        const result = await runSendAppealFlow(CSV_PAYERS_DATA_PATH, data);
         res.json(result);
     } catch (err: any) {
         res.status(400).json({ error: err.message });
