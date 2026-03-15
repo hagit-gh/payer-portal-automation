@@ -1,5 +1,6 @@
 import { Page } from "playwright";
 import { findElementByTypeAndAttributes } from "../utils";
+import { expect } from "playwright/test";
 
 export class LoginPageObject{
 
@@ -22,4 +23,19 @@ export class LoginPageObject{
         return elements[0]
     }
 
+    async login(userName: string, password: string) {
+    
+        const userNameElement = await this.getUserNameTextBox()
+        
+        await expect(userNameElement).toBeEditable()
+        await userNameElement.fill(userName);
+    
+        const passwordElement = await this.getPasswordTextBox()
+        await expect(passwordElement).toBeEditable()
+        await passwordElement.fill(password);
+    
+        const loginButton = await this.getLoginButton()
+        await loginButton.click()
+    
+    }
 }

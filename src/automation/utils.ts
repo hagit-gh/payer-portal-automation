@@ -1,7 +1,5 @@
 import { Browser, chromium, Page, Locator} from "playwright";
 import { requestContext } from "../server";
-import { LoginPageObject } from "./pages/login";
-import { expect } from 'playwright/test'
 import { delay } from "../utils/waiters";
 
 let browser: Browser | null = null;
@@ -49,23 +47,6 @@ export async function findElementByTypeAndAttributes(baseElement: Page | Locator
     }
 
     return elementsArray
-}
-
-export async function login(page: Page, userName: string, password: string) {
-
-    const loginPageObjects = new LoginPageObject(page)
-    const userNameElement = await loginPageObjects.getUserNameTextBox()
-    
-    await expect(userNameElement).toBeEditable()
-    await userNameElement.fill(userName);
-
-    const passwordElement = await loginPageObjects.getPasswordTextBox()
-    await expect(passwordElement).toBeEditable()
-    await passwordElement.fill(password);
-
-    const loginButton = await loginPageObjects.getLoginButton()
-    await loginButton.click()
-
 }
 
 export async function getBrowser() {

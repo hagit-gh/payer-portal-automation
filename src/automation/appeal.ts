@@ -1,7 +1,8 @@
 import { getPayer } from "../utils/csv"
 import { AppealPage } from "./pages/appeal"
-import { login, navigateToPortal } from "./utils"
+import { navigateToPortal } from "./utils"
 import { requestContext } from "../server"
+import { LoginPageObject } from "./pages/login"
 
 
 export async function runSendAppealFlow(csvFile: string, eobData: {
@@ -14,8 +15,9 @@ export async function runSendAppealFlow(csvFile: string, eobData: {
     const page = await navigateToPortal(payer.portalUrl)
 
     const appealPageObject = new AppealPage(page)
+    const loginPageObjects = new LoginPageObject(page)
 
-    await login(page, payer.username, payer.password)
+    await loginPageObjects.login(payer.username, payer.password)
     await appealPageObject.clickOnAppealTab()
     await appealPageObject.fillAppealForm(eobData.taxId, eobData.claimId, eobData.type, eobData.reason, eobData.attachments)
 
