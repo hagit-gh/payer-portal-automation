@@ -1,6 +1,6 @@
 import express, { type Request, type Response } from "express";
 import { runGetEobData } from "./automation/eob";
-import { runSendAppealFlow } from "./automation/appeal";
+import { generateAppealdata, runSendAppealFlow } from "./automation/appeal";
 import { randomUUID } from "crypto";
 import { AsyncLocalStorage } from "async_hooks";
 import { generateEOBResponse } from "./automation/eob";
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 app.post("/api/payer/eobs", async (req: Request, res: Response) => {
     try {
         const data = req.body;
-        let results = await runGetEobData(CSV_PAYERS_DATA_PATH, data);
+        const results = await runGetEobData(CSV_PAYERS_DATA_PATH, data);
         res.setHeader("Content-Type", "application/json");
         res.json(generateEOBResponse(results, data));
     } catch (err: any) {
@@ -42,7 +42,8 @@ app.post("/api/payer/submit-appeal", async (req: Request, res: Response) => {
     try {
         const data = req.body; // { payerId, taxId, claimId, appealType, attachments, submit, ... }
         const result = await runSendAppealFlow(CSV_PAYERS_DATA_PATH, data);
-        res.json(result);
+        res.setHeader("Content-Type", "application/json");
+        res.json(generateAppealdata(result, data));
     } catch (err: any) {
         res.status(400).json({ error: err.message });
     }
