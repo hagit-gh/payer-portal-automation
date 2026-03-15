@@ -40,20 +40,14 @@ export function generateAppealdata(runData: {}, reqData: {
     
     let results: { runId: string, claimId: string, type: string, payerId: string, taxId: string, reason: string } = {
         runId: "",
-        claimId: "",
-        type: "",
-        payerId: "",
-        taxId: "",
-        reason: ""
+        claimId: reqData.claimId,
+        type: reqData.type,
+        payerId: reqData.payerId,
+        taxId: reqData.taxId,
+        reason: reqData.reason
     }
 
     results.runId = requestContext.getStore()?.get("runId")
-    results.claimId = reqData.claimId
-    results.type = reqData.type
-    results.reason = reqData.reason
-    results.payerId = reqData.payerId
-    results.taxId = reqData.taxId
-
     return { ...results, ...runData }
 }
 
