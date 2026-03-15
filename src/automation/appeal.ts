@@ -1,31 +1,59 @@
-import { Page } from "playwright"
 import { getPayer } from "../utils/csv"
 import { AppealPage } from "./pages/appeal"
-import { login, openNewTab } from "./utils"
+import { login, navigateToPortal } from "./utils"
+import { requestContext } from "../server"
 
 
 export async function runSendAppealFlow(csvFile: string, eobData: {
-    payerId: string, claimId: string, taxId: string, dateTo: string, dateFrom: string, download: boolean, maxEobs: number, forceRedownload: boolean
+    payerId: string, claimId: string, taxId: string, type: string, reason: string, submit: boolean,
+    attachments: string[]
 }
 ) {
 
     const payer = await getPayer(csvFile, eobData.payerId, eobData.taxId)
-    const page = await openNewTab(payer.portalUrl)
+    const page = await navigateToPortal(payer.portalUrl)
 
     const appealPageObject = new AppealPage(page)
 
     await login(page, payer.username, payer.password)
-    await clickOnAppealTab(appealPageObject)
-    await fillAppealForm(eobData.taxId, eobData.claimId)
+    await appealPageObject.clickOnAppealTab()
+    await appealPageObject.fillAppealForm(eobData.taxId, eobData.claimId, eobData.type, eobData.reason, eobData.attachments)
 
+    if (!eobData.submit){
+        return {runStatus: "success"}
+    }
+
+    await appealPageObject.submitAppeal()
+    await appealPageObject.waitForConfirmationPage()
+
+    const confirmationId = await appealPageObject.getConfirmationId( )
+    return {confirmationId: confirmationId}
 }
 
-async function clickOnAppealTab(appealPageObject: AppealPage){
-    const appealTab = await appealPageObject.getAppealTab()
-    await appealTab.click()
+
+export function generateAppealdata(runData: {}, reqData: {
+    payerId: string, claimId: string, taxId: string, type: string, reason: string, submit: boolean,
+    attachments: string[]
+}){
+    
+    let results: { runId: string, claimId: string, type: string, payerId: string, taxId: string, reason: string } = {
+        runId: "",
+        claimId: "",
+        type: "",
+        payerId: "",
+        taxId: "",
+        reason: ""
+    }
+
+    results.runId = requestContext.getStore()?.get("runId")
+    results.claimId = reqData.claimId
+    results.type = reqData.type
+    results.reason = reqData.reason
+    results.payerId = reqData.payerId
+    results.taxId = reqData.taxId
+
+    return { ...results, ...runData }
 }
 
-async function fillAppealForm(texId: string, claimId: string, ) {
-    throw new Error("Function not implemented.")
-}
+
 
