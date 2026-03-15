@@ -32,6 +32,7 @@ export async function findElementByTypeAndAttributes(baseElement: Page | Locator
             placeholder: e.getAttribute("placeholder"),
             testid: e.getAttribute("data-testid"),
             html_type: e.getAttribute("type"),
+            class: e.getAttribute("class")
         }));
 
         const text = await el.innerText()
@@ -63,14 +64,14 @@ export async function login(page: Page, userName: string, password: string) {
     await passwordElement.fill(password);
 
     const loginButton = await loginPageObjects.getLoginButton()
-    await loginButton[0]?.click()
+    await loginButton.click()
 
 }
 
 export async function getBrowser() {
     if (!browser) {
         browser = await chromium.launch({ 
-            headless: true, 
+            headless: process.env.HEADLESS == "true", 
             downloadsPath: requestContext.getStore()?.get("downloadsPath")
          });
         console.log("Browser launched");
@@ -78,7 +79,7 @@ export async function getBrowser() {
     return browser;
 }
 
-export async function openNewTab(portalUrl: string): Promise<Page> {
+export async function navigateToPortal(portalUrl: string): Promise<Page> {
     const browser = await getBrowser();
     const context = await browser.newContext();
     const page = await context.newPage();
