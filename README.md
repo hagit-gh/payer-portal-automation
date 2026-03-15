@@ -84,10 +84,15 @@ npx playwright install
 # Running the Server
 
 Start the API server with:
+For headed mode (usually for debugging)
+```
+npm run start:headed
 
 ```
-npm run start:headed for headed mode (usually for debugging)
-npm run start:headless for headless mode (usually for production)
+For headless mode (usually for production):
+
+```
+npm run start:headless 
 
 ```
 The server will start locally at:
