@@ -115,7 +115,7 @@ curl -X POST http://localhost:3000/run \
   "payerId": "PAYER_001",
   "taxId": "12-3456789",
   "dateFrom": "2025-01-01",
-  "dateTo": "2025-01-31",
+  "dateTo": "2026-01-31",
   "maxEobs": 25,
   "download": true,
   "forceRedownload": false,
